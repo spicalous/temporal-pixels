@@ -3,16 +3,18 @@
   import { CanvasWrapper } from '@/canvas-wrapper.ts';
 
   const props = defineProps<{
-    backgroundColour: string
+    backgroundColour: string,
+    elapsedColour: string,
+    percentElapsed: number
   }>();
 
   const canvasRef = useTemplateRef<HTMLCanvasElement>('ref-canvas');
   const canvasWrapper = ref<CanvasWrapper | null>(null);
 
   onMounted(() => {
-    canvasWrapper.value = new CanvasWrapper(canvasRef.value!);
-    canvasWrapper.value.setDimensions(window.innerWidth, window.innerHeight);
+    canvasWrapper.value = new CanvasWrapper(canvasRef.value!, window.innerWidth, window.innerHeight);
     canvasWrapper.value.clear(props.backgroundColour);
+    canvasWrapper.value.setElapsed(props.elapsedColour, props.percentElapsed);
   });
 
   watch(
