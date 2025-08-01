@@ -1,46 +1,40 @@
 <script setup lang="ts">
-  import { ref, useTemplateRef, onMounted } from 'vue';
-  import { CanvasWrapper } from '@/canvas-wrapper.ts';
+  import { ref, onMounted } from 'vue';
+  import ClockCanvas from '@/components/ClockCanvas.vue';
 
   const BLACK = 'black';
   const WHITE = 'white';
 
-  const canvasRef = useTemplateRef<HTMLCanvasElement>('ref-canvas');
-  const canvasWrapper = ref<CanvasWrapper | null>(null);
   const showMenu = ref<boolean>(false);
   const fontColour = ref<string>(WHITE);
+  const backgroundColour = ref<string>(BLACK);
 
-  onMounted(() => {
-    canvasWrapper.value = new CanvasWrapper(canvasRef.value!);
-    canvasWrapper.value.setDimensions(window.innerWidth, window.innerHeight);
-    canvasWrapper.value.clear(BLACK);
-  });
 </script>
 
 <template>
-  <canvas
-    ref="ref-canvas"
+  <ClockCanvas
+    :backgroundColour="backgroundColour"
     @click="showMenu = true"
-  ></canvas>
+  />
   <div
-    v-if="showMenu && canvasWrapper"
+    v-if="showMenu"
     id="menu"
     :style="{ color: fontColour }"
   >
     <div>Background</div>
     <ul>
       <li
-        @click="fontColour = BLACK; canvasWrapper.clear(WHITE);"
+        @click="fontColour = BLACK; backgroundColour = WHITE;"
       >
         White
       </li>
       <li
-        @click="fontColour = WHITE; canvasWrapper.clear(BLACK);"
+        @click="fontColour = WHITE; backgroundColour = BLACK;"
       >
         Black
       </li>
     </ul>
-    <div>TimeUnit</div>
+    <div>Clock</div>
     <ul>
       <li>Day</li>
       <li>Week</li>
