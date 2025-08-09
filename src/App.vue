@@ -2,7 +2,7 @@
   import { ref, shallowRef, computed, onBeforeUnmount } from 'vue';
   import ClockCanvas from '@/components/ClockCanvas.vue';
   import ClockSvg from '@/components/ClockSvg.vue';
-  import { SECONDS_IN_A_DAY, getElapsedSecondsOfDay } from '@/utils/time.ts';
+  import { SECONDS_IN_A_DAY, formatTime, getElapsedSecondsOfDay } from '@/utils/time.ts';
   import { percentFloor } from '@/utils/math.ts';
 
   const BLACK = 'black';
@@ -20,6 +20,7 @@
     const elapsedSecondsOfDay = getElapsedSecondsOfDay(now.value);
     return percentFloor(elapsedSecondsOfDay, SECONDS_IN_A_DAY, 1000);
   });
+  const text = computed(() => formatTime(now.value));
 
   const intervalId = setInterval(() => {
     now.value = new Date();
@@ -34,7 +35,9 @@
   <component :is="componentType"
     :backgroundColour="backgroundColour"
     :elapsedColour="elapsedColour"
+    :textColour="fontColour"
     :percentElapsed="percentElapsed"
+    :text="text"
     @click="showMenu = true"
   ></component>
   <div
