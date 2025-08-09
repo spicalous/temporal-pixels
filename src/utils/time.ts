@@ -7,6 +7,6 @@ export function getElapsedSecondsOfDay(now: Date): number {
   return differenceInSeconds(now, startOfDay(now));
 }
 
-export function formatTime(date) {
+export function formatTime(date: Date) {
   return format(date, TIME_FORMAT_24);
 }
