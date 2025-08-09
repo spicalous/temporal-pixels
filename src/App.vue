@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, shallowRef } from 'vue';
+  import { ref, shallowRef, computed, onBeforeUnmount } from 'vue';
   import ClockCanvas from '@/components/ClockCanvas.vue';
   import ClockSvg from '@/components/ClockSvg.vue';
   import { SECONDS_IN_A_DAY, getElapsedSecondsOfDay } from '@/utils/time.ts';
@@ -14,10 +14,20 @@
   const fontColour = ref<string>(WHITE);
   const backgroundColour = ref<string>(BLACK);
   const elapsedColour = ref<string>(GREY);
+  const now = ref<Date>(new Date());
 
-  const elapsedSecondsOfDay = getElapsedSecondsOfDay(new Date());
-  const percentElapsed = percentFloor(elapsedSecondsOfDay, SECONDS_IN_A_DAY);
+  const percentElapsed = computed(() => {
+    const elapsedSecondsOfDay = getElapsedSecondsOfDay(now.value);
+    return percentFloor(elapsedSecondsOfDay, SECONDS_IN_A_DAY, 1000);
+  });
 
+  const intervalId = setInterval(() => {
+    now.value = new Date();
+  }, 1000);
+
+  onBeforeUnmount(() => {
+    clearInterval(intervalId);
+  });
 </script>
 
 <template>
