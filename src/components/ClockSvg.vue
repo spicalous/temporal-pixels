@@ -6,6 +6,7 @@
     textColour: string,
     percentElapsed: number,
     text: string,
+    fontSize: string,
   }>();
 </script>
 
@@ -16,7 +17,7 @@
       <rect :width="`${props.percentElapsed * 100}%`" height="100%" :fill="props.elapsedColour" />
     </svg>
     <div class="html-container">
-      <div :style="{ color: textColour }">
+      <div :style="{ color: textColour, fontSize: fontSize }">
         {{ text }}
       </div>
     </div>

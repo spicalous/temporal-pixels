@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { ref, shallowRef, computed, onBeforeUnmount } from 'vue';
-  import ClockCanvas from '@/components/ClockCanvas.vue';
+  import { ref, computed, onBeforeUnmount } from 'vue';
   import ClockSvg from '@/components/ClockSvg.vue';
   import { SECONDS_IN_A_DAY, formatTime, getElapsedSecondsOfDay } from '@/utils/time.ts';
   import { percentFloor } from '@/utils/math.ts';
@@ -10,7 +9,6 @@
   const GREY = 'grey';
 
   const showMenu = ref<boolean>(false);
-  const componentType = shallowRef(ClockSvg);
   const fontColour = ref<string>(WHITE);
   const backgroundColour = ref<string>(BLACK);
   const elapsedColour = ref<string>(GREY);
@@ -32,29 +30,20 @@
 </script>
 
 <template>
-  <component :is="componentType"
+  <ClockSvg
     :backgroundColour="backgroundColour"
     :elapsedColour="elapsedColour"
     :textColour="fontColour"
     :percentElapsed="percentElapsed"
     :text="text"
+    :fontSize="'8em'"
     @click="showMenu = true"
-  ></component>
+  ></ClockSvg>
   <div
     v-if="showMenu"
     id="menu"
     :style="{ color: fontColour }"
   >
-    <button
-      @click="componentType = ClockCanvas"
-    >
-      Canvas
-    </button>
-    <button
-      @click="componentType = ClockSvg"
-    >
-      SVG
-    </button>
     <div>Background</div>
     <button
       @click="fontColour = BLACK; backgroundColour = WHITE;"
