@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import { ref, computed, onBeforeUnmount } from 'vue';
   import ClockSvg from '@/components/ClockSvg.vue';
-  import { SECONDS_IN_A_DAY, formatTime, getElapsedSecondsOfDay } from '@/utils/time.ts';
-  import { percentFloor } from '@/utils/math.ts';
+  import { formatTime, getElapsedPercentageOfDay, getElapsedPercentageOfWeek } from '@/utils/time.ts';
 
   const BLACK = 'black';
   const WHITE = 'white';
@@ -14,10 +13,9 @@
   const elapsedColour = ref<string>(GREY);
   const now = ref<Date>(new Date());
 
-  const percentElapsed = computed(() => {
-    const elapsedSecondsOfDay = getElapsedSecondsOfDay(now.value);
-    return percentFloor(elapsedSecondsOfDay, SECONDS_IN_A_DAY, 1000);
-  });
+  const percentElapsedFn = ref(getElapsedPercentageOfDay);
+
+  const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value));
   const text = computed(() => formatTime(now.value));
 
   const intervalId = setInterval(() => {
@@ -56,12 +54,18 @@
       Black
     </button>
     <div>Clock</div>
-    <ul>
-      <li>Day</li>
-      <li>Week</li>
-      <li>Month</li>
-      <li>Year</li>
-    </ul>
+    <button
+      @click="percentElapsedFn = getElapsedPercentageOfDay"
+    >
+      Day
+    </button>
+    <button
+      @click="percentElapsedFn = getElapsedPercentageOfWeek"
+    >
+      Week
+    </button>
+    <br/>
+    <br/>
     <button
       @click="showMenu = false"
     >
