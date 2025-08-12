@@ -34,7 +34,6 @@
     :textColour="fontColour"
     :percentElapsed="percentElapsed"
     :text="text"
-    :fontSize="'8em'"
     @click="showMenu = true"
   ></ClockSvg>
   <div
