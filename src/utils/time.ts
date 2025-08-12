@@ -4,7 +4,8 @@ import { percentFloor } from '@/utils/math.ts';
 const SECONDS_IN_A_DAY = 86400;
 const SECONDS_IN_A_WEEK = SECONDS_IN_A_DAY * 7;
 const PRECISION = 1000;
-const TIME_FORMAT_24 = 'HH:mm:ss';
+export const TIME_FORMAT_24 = 'HH:mm:ss';
+export const WEEK_FORMAT_24 = 'eee HH:mm:ss';
 
 function getElapsedSecondsOfDay(date: Date): number {
   return differenceInSeconds(date, startOfDay(date));
@@ -26,4 +27,8 @@ export function getElapsedPercentageOfWeek(date: Date): number {
 
 export function formatTime(date: Date): string {
   return format(date, TIME_FORMAT_24);
+}
+
+export function formatWeek(date: Date): string {
+  return format(date, WEEK_FORMAT_24);
 }

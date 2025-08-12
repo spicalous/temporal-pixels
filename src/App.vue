@@ -1,7 +1,11 @@
 <script setup lang="ts">
   import { ref, computed, onBeforeUnmount } from 'vue';
   import ClockSvg from '@/components/ClockSvg.vue';
-  import { formatTime, getElapsedPercentageOfDay, getElapsedPercentageOfWeek } from '@/utils/time.ts';
+  import {
+   formatTime,
+   getElapsedPercentageOfDay,
+   getElapsedPercentageOfWeek
+ } from '@/utils/time.ts';
 
   const BLACK = 'black';
   const WHITE = 'white';
@@ -14,9 +18,10 @@
   const now = ref<Date>(new Date());
 
   const percentElapsedFn = ref(getElapsedPercentageOfDay);
+  const formatDateFn = ref(formatTime);
 
   const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value));
-  const text = computed(() => formatTime(now.value));
+  const text = computed(() => formatDateFn.value.call(this, now.value));
 
   const intervalId = setInterval(() => {
     now.value = new Date();
@@ -41,7 +46,7 @@
     id="menu"
     :style="{ color: fontColour }"
   >
-    <div>Background</div>
+    <div>Background colour</div>
     <button
       @click="fontColour = BLACK; backgroundColour = WHITE;"
     >
@@ -52,7 +57,7 @@
     >
       Black
     </button>
-    <div>Clock</div>
+    <div>Clock progress bar</div>
     <button
       @click="percentElapsedFn = getElapsedPercentageOfDay"
     >
