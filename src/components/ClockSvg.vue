@@ -5,7 +5,8 @@
     elapsedColour: string,
     textColour: string,
     percentElapsed: number,
-    text: string
+    text: string,
+    bottomText: string
   }>();
 </script>
 
@@ -18,6 +19,9 @@
     <div class="html-container">
       <div class="main-text" :style="{ color: textColour }">
         {{ text }}
+      </div>
+      <div class="bottom-text" :style="{ color: textColour }">
+        {{ bottomText }}
       </div>
     </div>
   </div>
@@ -41,5 +45,10 @@
 
   .main-text {
     font-size: clamp(5em, 20vw, 20em);
+  }
+  .bottom-text {
+    position: absolute;
+    bottom: 0;
+    font-size: 2em;
   }
 </style>

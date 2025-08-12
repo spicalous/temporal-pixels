@@ -3,6 +3,8 @@
   import ClockSvg from '@/components/ClockSvg.vue';
   import {
    formatTime,
+   formatWeekDays,
+   emptyStr,
    getElapsedPercentageOfDay,
    getElapsedPercentageOfWeek
  } from '@/utils/time.ts';
@@ -18,10 +20,11 @@
   const now = ref<Date>(new Date());
 
   const percentElapsedFn = ref(getElapsedPercentageOfDay);
-  const formatDateFn = ref(formatTime);
+  const formatBottomTextFn = ref(emptyStr);
 
   const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value));
-  const text = computed(() => formatDateFn.value.call(this, now.value));
+  const text = computed(() => formatTime(now.value));
+  const bottomText = computed(() => formatBottomTextFn.value.call(this, now.value));
 
   const intervalId = setInterval(() => {
     now.value = new Date();
@@ -39,6 +42,7 @@
     :textColour="fontColour"
     :percentElapsed="percentElapsed"
     :text="text"
+    :bottomText="bottomText"
     @click="showMenu = true"
   ></ClockSvg>
   <div
@@ -67,6 +71,17 @@
       @click="percentElapsedFn = getElapsedPercentageOfWeek"
     >
       Week
+    </button>
+    <div>Weekdays</div>
+    <button
+      @click="formatBottomTextFn = emptyStr"
+    >
+      Hide
+    </button>
+    <button
+      @click="formatBottomTextFn = formatWeekDays"
+    >
+      Show
     </button>
     <br/>
     <br/>
