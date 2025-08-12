@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "test": "npm run lint && npm run build && npm run test:unit -- run",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
