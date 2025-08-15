@@ -1,15 +1,15 @@
 <script setup lang="ts">
   import { ref, computed, onBeforeUnmount } from 'vue';
+  import MainMenu from '@/components/menu/MainMenu.vue';
   import ClockSvg from '@/components/ClockSvg.vue';
   import TimeText from '@/components/TimeText.vue';
   import WeekDayText from '@/components/WeekDayText.vue';
   import {
-   formatTime,
-   formatWeekDays,
-   emptyStr,
-   getElapsedPercentageOfDay,
-   getElapsedPercentageOfWeek
- } from '@/utils/time.ts';
+    formatTime,
+    emptyStr,
+    getElapsedPercentageOfDay,
+    getElapsedPercentageOfWeek
+  } from '@/utils/time.ts';
 
   const BLACK = 'black';
   const WHITE = 'white';
@@ -28,11 +28,6 @@
   const text = computed(() => formatTime(now.value));
   const bottomText = computed(() => formatBottomTextFn.value.call(this, now.value));
   const showWeekdaySetting = computed(() => percentElapsedFn.value === getElapsedPercentageOfWeek);
-
-  function setClockTypeDay() {
-    percentElapsedFn.value = getElapsedPercentageOfDay;
-    formatBottomTextFn.value = emptyStr;
-  }
 
   const intervalId = setInterval(() => {
     now.value = new Date();
@@ -63,55 +58,18 @@
       :percentElapsed="percentElapsed"
     ></WeekDayText>
   </div>
-
-  <div
-    v-if="showMenu"
+  <MainMenu
     id="menu"
+    v-if="showMenu"
     :style="{ color: fontColour }"
+    :showWeekdaySetting="showWeekdaySetting"
+    @onFontColourUpdate="(newFontColour: string) => fontColour = newFontColour"
+    @onBackgroundColourUpdate="(newBackgroundColour) => backgroundColour = newBackgroundColour"
+    @onPercentElapsedFnUpdate="(newPercentElapsedFn) => percentElapsedFn = newPercentElapsedFn"
+    @onFormatBottomTextFnUpdate="(newFormatBottomTextFn) => formatBottomTextFn = newFormatBottomTextFn"
+    @onClose="showMenu = false"
   >
-    <div>Background colour</div>
-    <button
-      @click="fontColour = BLACK; backgroundColour = WHITE;"
-    >
-      White
-    </button>
-    <button
-      @click="fontColour = WHITE; backgroundColour = BLACK;"
-    >
-      Black
-    </button>
-    <div>Clock progress bar</div>
-    <button
-      @click="setClockTypeDay"
-    >
-      Day
-    </button>
-    <button
-      @click="percentElapsedFn = getElapsedPercentageOfWeek"
-    >
-      Week
-    </button>
-    <template v-if="showWeekdaySetting">
-      <div>Weekdays</div>
-      <button
-        @click="formatBottomTextFn = emptyStr"
-      >
-        Hide
-      </button>
-      <button
-        @click="formatBottomTextFn = formatWeekDays"
-      >
-        Show
-      </button>
-    </template>
-    <br/>
-    <br/>
-    <button
-      @click="showMenu = false"
-    >
-      Close
-    </button>
-  </div>
+  </MainMenu>
 </template>
 
 <style scoped>
