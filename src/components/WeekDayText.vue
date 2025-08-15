@@ -1,34 +1,41 @@
 <script setup lang="ts">
+  import { computed } from 'vue';
 
   const props = defineProps<{
     text: string,
-    textColour: string
+    textColour: string,
+    percentElapsed: number
   }>();
+
+  const dynamicTextStyles = computed(() => {
+    return {
+      color: props.textColour,
+      width: `${props.percentElapsed * 100}%`
+    };
+  });
 </script>
 
 <template>
-  <div class="text-container">
-    <div class="text" :style="{ color: props.textColour }">
+  <div class="weekday-container" :style="dynamicTextStyles">
+    <div class="text">
       {{ props.text }}
     </div>
   </div>
 </template>
 
 <style scoped>
-  .text-container {
+  .weekday-container {
     height: 100vh;
-    width: 100vw;
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
+    font-size: 2em;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: end;
+    justify-content: end;
   }
 
   .text {
-    position: absolute;
-    bottom: 0;
-    font-size: 2em;
+    padding: 4px 10px;
   }
 </style>

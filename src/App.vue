@@ -60,6 +60,7 @@
     <WeekDayText
       :text="bottomText"
       :textColour="fontColour"
+      :percentElapsed="percentElapsed"
     ></WeekDayText>
   </div>
 
