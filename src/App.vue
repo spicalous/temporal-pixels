@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { ref, computed, onBeforeUnmount } from 'vue';
   import ClockSvg from '@/components/ClockSvg.vue';
+  import TimeText from '@/components/TimeText.vue';
+  import WeekDayText from '@/components/WeekDayText.vue';
   import {
    formatTime,
    formatWeekDays,
@@ -25,6 +27,12 @@
   const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value));
   const text = computed(() => formatTime(now.value));
   const bottomText = computed(() => formatBottomTextFn.value.call(this, now.value));
+  const showWeekdaySetting = computed(() => percentElapsedFn.value === getElapsedPercentageOfWeek);
+
+  function setClockTypeDay() {
+    percentElapsedFn.value = getElapsedPercentageOfDay;
+    formatBottomTextFn.value = emptyStr;
+  }
 
   const intervalId = setInterval(() => {
     now.value = new Date();
@@ -36,15 +44,25 @@
 </script>
 
 <template>
-  <ClockSvg
-    :backgroundColour="backgroundColour"
-    :elapsedColour="elapsedColour"
-    :textColour="fontColour"
-    :percentElapsed="percentElapsed"
-    :text="text"
-    :bottomText="bottomText"
+  <div
+    class="clock-container"
     @click="showMenu = true"
-  ></ClockSvg>
+  >
+    <ClockSvg
+      :backgroundColour="backgroundColour"
+      :elapsedColour="elapsedColour"
+      :percentElapsed="percentElapsed"
+    ></ClockSvg>
+    <TimeText
+      :text="text"
+      :textColour="fontColour"
+    ></TimeText>
+    <WeekDayText
+      :text="bottomText"
+      :textColour="fontColour"
+    ></WeekDayText>
+  </div>
+
   <div
     v-if="showMenu"
     id="menu"
@@ -63,7 +81,7 @@
     </button>
     <div>Clock progress bar</div>
     <button
-      @click="percentElapsedFn = getElapsedPercentageOfDay"
+      @click="setClockTypeDay"
     >
       Day
     </button>
@@ -72,17 +90,19 @@
     >
       Week
     </button>
-    <div>Weekdays</div>
-    <button
-      @click="formatBottomTextFn = emptyStr"
-    >
-      Hide
-    </button>
-    <button
-      @click="formatBottomTextFn = formatWeekDays"
-    >
-      Show
-    </button>
+    <template v-if="showWeekdaySetting">
+      <div>Weekdays</div>
+      <button
+        @click="formatBottomTextFn = emptyStr"
+      >
+        Hide
+      </button>
+      <button
+        @click="formatBottomTextFn = formatWeekDays"
+      >
+        Show
+      </button>
+    </template>
     <br/>
     <br/>
     <button
@@ -94,6 +114,11 @@
 </template>
 
 <style scoped>
+  .clock-container {
+    height: 100vh;
+    width: 100vw;
+  }
+
   #menu {
     position: fixed;
     top: 0;
