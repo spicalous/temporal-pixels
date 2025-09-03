@@ -25,11 +25,6 @@
 
 <style scoped>
   .weekday-container {
-    height: 100vh;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    font-size: 2em;
     display: flex;
     align-items: end;
     justify-content: end;

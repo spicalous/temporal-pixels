@@ -49,10 +49,12 @@
       :percentElapsed="percentElapsed"
     ></ClockSvg>
     <TimeText
+      class="time-text"
       :text="text"
       :textColour="fontColour"
     ></TimeText>
     <WeekDayText
+      class="weekday-text"
       :text="bottomText"
       :textColour="fontColour"
       :percentElapsed="percentElapsed"
@@ -76,6 +78,22 @@
   .clock-container {
     height: 100vh;
     width: 100vw;
+  }
+
+  .time-text {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .weekday-text {
+    height: 100vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 2em;
   }
 
   #menu {
