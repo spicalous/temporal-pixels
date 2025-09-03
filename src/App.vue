@@ -1,10 +1,12 @@
 <script setup lang="ts">
+  import type { CalculateElapsedPercentageFunction } from '@/utils/time.ts';
   import { ref, computed, onBeforeUnmount } from 'vue';
   import MainMenu from '@/components/menu/MainMenu.vue';
   import ClockSvg from '@/components/ClockSvg.vue';
   import TimeText from '@/components/TimeText.vue';
   import WeekDayText from '@/components/WeekDayText.vue';
   import {
+    Weekday,
     formatTime,
     emptyStr,
     getElapsedPercentageOfDay,
@@ -20,11 +22,12 @@
   const backgroundColour = ref<string>(BLACK);
   const elapsedColour = ref<string>(GREY);
   const now = ref<Date>(new Date());
+  const dayToStartWeek = ref<Weekday>(Weekday.SUNDAY);
 
-  const percentElapsedFn = ref(getElapsedPercentageOfDay);
+  const percentElapsedFn = ref<CalculateElapsedPercentageFunction>(getElapsedPercentageOfDay);
   const formatBottomTextFn = ref(emptyStr);
 
-  const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value));
+  const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value, dayToStartWeek.value));
   const text = computed(() => formatTime(now.value));
   const bottomText = computed(() => formatBottomTextFn.value.call(this, now.value));
   const showWeekdaySetting = computed(() => percentElapsedFn.value === getElapsedPercentageOfWeek);
@@ -69,6 +72,7 @@
     @onBackgroundColourUpdate="(newBackgroundColour) => backgroundColour = newBackgroundColour"
     @onPercentElapsedFnUpdate="(newPercentElapsedFn) => percentElapsedFn = newPercentElapsedFn"
     @onFormatBottomTextFnUpdate="(newFormatBottomTextFn) => formatBottomTextFn = newFormatBottomTextFn"
+    @onWeekStartUpdate="(newWeekStart) => dayToStartWeek = newWeekStart"
     @onClose="showMenu = false"
   >
   </MainMenu>

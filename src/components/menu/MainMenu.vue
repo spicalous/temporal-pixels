@@ -1,5 +1,7 @@
 <script setup lang="ts">
+  import type { CalculateElapsedPercentageFunction } from '@/utils/time.ts';
   import {
+    Weekday,
     formatWeekDays,
     emptyStr,
     getElapsedPercentageOfDay,
@@ -13,8 +15,9 @@
   const emit = defineEmits<{
     (e: 'onFontColourUpdate', newFontColour: string): void
     (e: 'onBackgroundColourUpdate', newBackgroundColour: string): void
-    (e: 'onPercentElapsedFnUpdate', newPercentElapsedFn: (date: Date) => number): void
+    (e: 'onPercentElapsedFnUpdate', newPercentElapsedFn: CalculateElapsedPercentageFunction): void
     (e: 'onFormatBottomTextFnUpdate', newFormatBottomTextFn: (date: Date) => string): void
+    (e: 'onWeekStartUpdate', day: Weekday): void
     (e: 'onClose'): void
   }>();
 
@@ -63,6 +66,14 @@
       >
         Show
       </button>
+      <div>Week start day</div>
+      <template v-for="day in Weekday" :key="day">
+        <button
+          @click="$emit('onWeekStartUpdate', day)"
+        >
+          {{ day }}
+        </button>
+      </template>
     </template>
     <br/>
     <br/>

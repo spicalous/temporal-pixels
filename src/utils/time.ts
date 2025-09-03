@@ -1,29 +1,49 @@
+import type { Day } from 'date-fns';
 import { differenceInSeconds, format, startOfDay, startOfWeek } from 'date-fns';
+import {
+  secondsInDay as SECONDS_IN_DAY,
+  secondsInWeek as SECONDS_IN_WEEK
+} from 'date-fns/constants';
 import { percentFloor } from '@/utils/math.ts';
 
-const SECONDS_IN_A_DAY = 86400;
-const SECONDS_IN_A_WEEK = SECONDS_IN_A_DAY * 7;
 const PRECISION = 1000;
 const TIME_FORMAT_24 = 'HH:mm:ss';
 const WEEK_DAY_FORMAT = 'eee';
 const EMPTY_STR = '';
 
-function getElapsedSecondsOfDay(date: Date): number {
-  return differenceInSeconds(date, startOfDay(date));
+export enum Weekday {
+  SUNDAY = "SUNDAY",
+  MONDAY = "MONDAY",
+  TUESDAY = "TUESDAY",
+  WEDNESDAY = "WEDNESDAY",
+  THURSDAY = "THURSDAY",
+  FRIDAY = "FRIDAY",
+  SATURDAY = "SATURDAY"
 }
 
-function getElapsedSecondsOfWeek(date: Date): number {
-  return differenceInSeconds(date, startOfWeek(date));
+const WeekdayIndex: { [k in Weekday]: Day } = {
+  [Weekday.SUNDAY]: 0,
+  [Weekday.MONDAY]: 1,
+  [Weekday.TUESDAY]: 2,
+  [Weekday.WEDNESDAY]: 3,
+  [Weekday.THURSDAY]: 4,
+  [Weekday.FRIDAY]: 5,
+  [Weekday.SATURDAY]: 6
+};
+
+export interface CalculateElapsedPercentageFunction {
+  (date: Date, dayToStartWeek: Weekday): number;
 }
 
-export function getElapsedPercentageOfDay(date: Date): number {
-  const elapsedSeconds = getElapsedSecondsOfDay(date);
-  return percentFloor(elapsedSeconds, SECONDS_IN_A_DAY, PRECISION);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getElapsedPercentageOfDay(date: Date, dayToStartWeek: Weekday): number {
+  const elapsedSeconds = differenceInSeconds(date, startOfDay(date));
+  return percentFloor(elapsedSeconds, SECONDS_IN_DAY, PRECISION);
 }
 
-export function getElapsedPercentageOfWeek(date: Date): number {
-  const elapsedSeconds = getElapsedSecondsOfWeek(date);
-  return percentFloor(elapsedSeconds, SECONDS_IN_A_WEEK, PRECISION);
+export function getElapsedPercentageOfWeek(date: Date, weekStartsOn: Weekday): number {
+  const elapsedSeconds = differenceInSeconds(date, startOfWeek(date, { weekStartsOn: WeekdayIndex[weekStartsOn] }));
+  return percentFloor(elapsedSeconds, SECONDS_IN_WEEK, PRECISION);
 }
 
 export function formatTime(date: Date): string {
