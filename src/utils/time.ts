@@ -1,8 +1,9 @@
 import type { Day } from 'date-fns';
-import { differenceInSeconds, format, startOfDay, startOfWeek, startOfMonth, getDaysInMonth } from 'date-fns';
+import { differenceInSeconds, format, startOfDay, startOfWeek, startOfMonth, startOfYear, getDaysInMonth } from 'date-fns';
 import {
   secondsInDay as SECONDS_IN_DAY,
-  secondsInWeek as SECONDS_IN_WEEK
+  secondsInWeek as SECONDS_IN_WEEK,
+  secondsInYear as SECONDS_IN_YEAR
 } from 'date-fns/constants';
 import { percentFloor } from '@/utils/math.ts';
 
@@ -51,6 +52,12 @@ export function getElapsedPercentageOfMonth(date: Date, weekStartsOn: Weekday) {
   const elapsedSeconds = differenceInSeconds(date, startOfMonth(date));
   const secondsInMonth = SECONDS_IN_DAY * getDaysInMonth(date);
   return percentFloor(elapsedSeconds, secondsInMonth, PRECISION);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getElapsedPercentageOfYear(date: Date, weekStartsOn: Weekday) {
+  const elapsedSeconds = differenceInSeconds(date, startOfYear(date));
+  return percentFloor(elapsedSeconds, SECONDS_IN_YEAR, PRECISION);
 }
 
 export function formatTime(date: Date): string {

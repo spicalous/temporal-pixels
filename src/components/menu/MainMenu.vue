@@ -6,7 +6,8 @@
     emptyStr,
     getElapsedPercentageOfDay,
     getElapsedPercentageOfWeek,
-    getElapsedPercentageOfMonth
+    getElapsedPercentageOfMonth,
+    getElapsedPercentageOfYear
   } from '@/utils/time.ts';
 
   const props = defineProps<{
@@ -59,6 +60,11 @@
       @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfMonth)"
     >
       Month
+    </button>
+    <button
+      @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfYear)"
+    >
+      Year
     </button>
     <template v-if="props.showWeekdaySetting">
       <div>Weekdays</div>
