@@ -33,11 +33,11 @@ const WeekdayIndex: { [k in Weekday]: Day } = {
 };
 
 export interface CalculateElapsedPercentageFunction {
-  (date: Date, dayToStartWeek: Weekday): number;
+  (date: Date, weekStartsOn: Weekday): number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function getElapsedPercentageOfDay(date: Date, dayToStartWeek: Weekday): number {
+export function getElapsedPercentageOfDay(date: Date, weekStartsOn: Weekday): number {
   const elapsedSeconds = differenceInSeconds(date, startOfDay(date));
   return percentFloor(elapsedSeconds, SECONDS_IN_DAY, PRECISION);
 }
