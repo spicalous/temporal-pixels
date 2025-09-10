@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import type { CalculateElapsedPercentageFunction } from '@/utils/time.ts';
   import {
-    Weekday,
-    formatWeekDays,
-    emptyStr,
+    FORMAT_EMPTY,
+    FORMAT_DAY,
+    FORMAT_DATE_DAY,
+    FORMAT_DAY_DATE,
+    Day,
     getElapsedPercentageOfDay,
     getElapsedPercentageOfWeek,
     getElapsedPercentageOfMonth,
@@ -11,7 +13,7 @@
   } from '@/utils/time.ts';
 
   const props = defineProps<{
-    showWeekdaySetting: boolean
+    showWeekSetting: boolean
   }>();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,13 +21,20 @@
     (e: 'onFontColourUpdate', newFontColour: string): void
     (e: 'onBackgroundColourUpdate', newBackgroundColour: string): void
     (e: 'onPercentElapsedFnUpdate', newPercentElapsedFn: CalculateElapsedPercentageFunction): void
-    (e: 'onFormatBottomTextFnUpdate', newFormatBottomTextFn: (date: Date) => string): void
-    (e: 'onWeekStartUpdate', day: Weekday): void
+    (e: 'onBottomTextFormatUpdate', newBottomTextFormat: string): void
+    (e: 'onWeekStartUpdate', day: Day): void
     (e: 'onClose'): void
   }>();
 
   const BLACK = 'black';
   const WHITE = 'white';
+
+  const formatList = [
+    { format: FORMAT_EMPTY, btnText: 'Hide' },
+    { format: FORMAT_DAY, btnText: 'Show day' },
+    { format: FORMAT_DATE_DAY, btnText: 'Show date and day' },
+    { format: FORMAT_DAY_DATE, btnText: 'Show day and date' }
+  ];
 </script>
 
 <template>
@@ -62,20 +71,17 @@
     >
       Year
     </button>
-    <div>Weekdays</div>
-    <button
-      @click="$emit('onFormatBottomTextFnUpdate', emptyStr)"
-    >
-      Hide
-    </button>
-    <button
-      @click="$emit('onFormatBottomTextFnUpdate', formatWeekDays)"
-    >
-      Show
-    </button>
-    <template v-if="props.showWeekdaySetting">
+    <div>Bottom text</div>
+    <template v-for="formatItem in formatList" :key="formatItem.format">
+      <button
+        @click="$emit('onBottomTextFormatUpdate', formatItem.format)"
+      >
+        {{ formatItem.btnText }}
+      </button>
+    </template>
+    <template v-if="props.showWeekSetting">
       <div>Week start day</div>
-      <template v-for="day in Weekday" :key="day">
+      <template v-for="day in Day" :key="day">
         <button
           @click="$emit('onWeekStartUpdate', day)"
         >

@@ -6,9 +6,10 @@
   import TimeText from '@/components/TimeText.vue';
   import WeekDayText from '@/components/WeekDayText.vue';
   import {
-    Weekday,
-    formatTime,
-    emptyStr,
+    FORMAT_TIME_24,
+    FORMAT_EMPTY,
+    Day,
+    format,
     getElapsedPercentageOfDay,
     getElapsedPercentageOfWeek
   } from '@/utils/time.ts';
@@ -22,15 +23,15 @@
   const backgroundColour = ref<string>(BLACK);
   const elapsedColour = ref<string>(GREY);
   const now = ref<Date>(new Date());
-  const dayToStartWeek = ref<Weekday>(Weekday.SUNDAY);
+  const dayToStartWeek = ref<Day>(Day.SUNDAY);
 
   const percentElapsedFn = ref<CalculateElapsedPercentageFunction>(getElapsedPercentageOfDay);
-  const formatBottomTextFn = ref(emptyStr);
+  const bottomTextFormat = ref(FORMAT_EMPTY);
 
   const percentElapsed = computed(() => percentElapsedFn.value.call(this, now.value, dayToStartWeek.value));
-  const text = computed(() => formatTime(now.value));
-  const bottomText = computed(() => formatBottomTextFn.value.call(this, now.value));
-  const showWeekdaySetting = computed(() => percentElapsedFn.value === getElapsedPercentageOfWeek);
+  const text = computed(() => format(now.value, FORMAT_TIME_24));
+  const bottomText = computed(() => format(now.value, bottomTextFormat.value));
+  const showWeekSetting = computed(() => percentElapsedFn.value === getElapsedPercentageOfWeek);
 
   const intervalId = setInterval(() => {
     now.value = new Date();
@@ -67,11 +68,11 @@
     id="menu"
     v-if="showMenu"
     :style="{ color: fontColour }"
-    :showWeekdaySetting="showWeekdaySetting"
+    :showWeekSetting="showWeekSetting"
     @onFontColourUpdate="(newFontColour: string) => fontColour = newFontColour"
     @onBackgroundColourUpdate="(newBackgroundColour) => backgroundColour = newBackgroundColour"
     @onPercentElapsedFnUpdate="(newPercentElapsedFn) => percentElapsedFn = newPercentElapsedFn"
-    @onFormatBottomTextFnUpdate="(newFormatBottomTextFn) => formatBottomTextFn = newFormatBottomTextFn"
+    @onBottomTextFormatUpdate="(newBottomTextFormat) => bottomTextFormat = newBottomTextFormat"
     @onWeekStartUpdate="(newWeekStart) => dayToStartWeek = newWeekStart"
     @onClose="showMenu = false"
   >

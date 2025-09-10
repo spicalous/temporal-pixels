@@ -1,13 +1,15 @@
 import { describe, it, expect } from 'vitest';
-
 import {
-  Weekday,
+  FORMAT_TIME_24,
+  FORMAT_EMPTY,
+  FORMAT_DAY,
+  FORMAT_DATE_DAY,
+  FORMAT_DAY_DATE,
+  Day,
+  format,
   getElapsedPercentageOfDay,
   getElapsedPercentageOfWeek,
   getElapsedPercentageOfMonth,
-  formatTime,
-  emptyStr,
-  formatWeekDays,
 } from '@/utils/time.ts';
 
 describe('utils / time', () => {
@@ -44,12 +46,12 @@ describe('utils / time', () => {
 
     it('getElapsedPercentageOfWeek 1% with specified weekStartsOn', () => {
       const mockNow = new Date((MILLIS_IN_A_WEEK / 100) + MILLIS_FROM_EPOCH_TO_SUNDAY + MILLIS_IN_A_DAY - TZ_OFFSET_MILLIS);
-      expect(getElapsedPercentageOfWeek(mockNow, Weekday.MONDAY)).toEqual(0.01);
+      expect(getElapsedPercentageOfWeek(mockNow, Day.MONDAY)).toEqual(0.01);
     });
 
     it('getElapsedPercentageOfWeek 50% with specified weekStartsOn', () => {
       const mockNow = new Date((MILLIS_IN_A_WEEK / 2) + MILLIS_FROM_EPOCH_TO_SUNDAY + MILLIS_IN_A_DAY - TZ_OFFSET_MILLIS);
-      expect(getElapsedPercentageOfWeek(mockNow, Weekday.MONDAY)).toEqual(0.5);
+      expect(getElapsedPercentageOfWeek(mockNow, Day.MONDAY)).toEqual(0.5);
     });
 
     it('getElapsedPercentageOfMonth 1%', () => {
@@ -63,21 +65,20 @@ describe('utils / time', () => {
     });
   });
 
-  describe('formatting', () => {
+  describe('format', () => {
 
-    it('formatTime', () => {
-      const mockNow = new Date(0 - TZ_OFFSET_MILLIS);
-      expect(formatTime(mockNow)).toEqual('00:00:00');
-    });
+    const mockNow = new Date(0 - TZ_OFFSET_MILLIS);
 
-    it('emptyStr', () => {
-      const mockNow = new Date(0 - TZ_OFFSET_MILLIS);
-      expect(emptyStr(mockNow)).toEqual('');
-    });
-
-    it('formatWeekDays', () => {
-      const mockNow = new Date(0 - TZ_OFFSET_MILLIS);
-      expect(formatWeekDays(mockNow)).toEqual('Thu');
+    [
+      ['FORMAT_TIME_24', FORMAT_TIME_24, '00:00:00'],
+      ['FORMAT_EMPTY', FORMAT_EMPTY, ' '],
+      ['FORMAT_DAY', FORMAT_DAY, 'Thu'],
+      ['FORMAT_DATE_DAY', FORMAT_DATE_DAY, '1 Thu'],
+      ['FORMAT_DAY_DATE', FORMAT_DAY_DATE, 'Thu 1'],
+    ].forEach(([testName, formatToTest, expected]) => {
+      it(testName, () => {
+        expect(format(mockNow, formatToTest)).toEqual(expected);
+      });
     });
   });
 });
