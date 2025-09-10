@@ -5,6 +5,12 @@ import {
   FORMAT_DAY,
   FORMAT_DATE_DAY,
   FORMAT_DAY_DATE,
+  FORMAT_DAY_OF_MONTH,
+  FORMAT_DAY_OF_YEAR,
+  FORMAT_WEEK_OF_YEAR,
+  FORMAT_MONTH,
+  FORMAT_DAY_MONTH_YEAR,
+  FORMAT_YEAR_MONTH_DATE,
   Day,
   format,
   getElapsedPercentageOfDay,
@@ -75,6 +81,12 @@ describe('utils / time', () => {
       ['FORMAT_DAY', FORMAT_DAY, 'Thu'],
       ['FORMAT_DATE_DAY', FORMAT_DATE_DAY, '1 Thu'],
       ['FORMAT_DAY_DATE', FORMAT_DAY_DATE, 'Thu 1'],
+      ['FORMAT_DAY_OF_MONTH', FORMAT_DAY_OF_MONTH, '1'],
+      ['FORMAT_DAY_OF_YEAR', FORMAT_DAY_OF_YEAR, '1'],
+      ['FORMAT_WEEK_OF_YEAR', FORMAT_WEEK_OF_YEAR, '1'],
+      ['FORMAT_MONTH', FORMAT_MONTH, 'Jan'],
+      ['FORMAT_DAY_MONTH_YEAR', FORMAT_DAY_MONTH_YEAR, '01-01-1970'],
+      ['FORMAT_YEAR_MONTH_DATE', FORMAT_YEAR_MONTH_DATE, '1970-01-01'],
     ].forEach(([testName, formatToTest, expected]) => {
       it(testName, () => {
         expect(format(mockNow, formatToTest)).toEqual(expected);

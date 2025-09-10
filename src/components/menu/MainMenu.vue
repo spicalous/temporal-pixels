@@ -5,6 +5,12 @@
     FORMAT_DAY,
     FORMAT_DATE_DAY,
     FORMAT_DAY_DATE,
+    FORMAT_DAY_OF_MONTH,
+    FORMAT_DAY_OF_YEAR,
+    FORMAT_WEEK_OF_YEAR,
+    FORMAT_MONTH,
+    FORMAT_DAY_MONTH_YEAR,
+    FORMAT_YEAR_MONTH_DATE,
     Day,
     getElapsedPercentageOfDay,
     getElapsedPercentageOfWeek,
@@ -31,9 +37,15 @@
 
   const formatList = [
     { format: FORMAT_EMPTY, btnText: 'Hide' },
-    { format: FORMAT_DAY, btnText: 'Show day' },
-    { format: FORMAT_DATE_DAY, btnText: 'Show date and day' },
-    { format: FORMAT_DAY_DATE, btnText: 'Show day and date' }
+    { format: FORMAT_DAY, btnText: 'Day' },
+    { format: FORMAT_DATE_DAY, btnText: 'Date and day' },
+    { format: FORMAT_DAY_DATE, btnText: 'Day and date' },
+    { format: FORMAT_DAY_OF_MONTH, btnText: 'Day of month' },
+    { format: FORMAT_DAY_OF_YEAR, btnText: 'Day of year' },
+    { format: FORMAT_WEEK_OF_YEAR, btnText: 'Week of year' },
+    { format: FORMAT_MONTH, btnText: 'Month' },
+    { format: FORMAT_DAY_MONTH_YEAR, btnText: 'dd-MM-yyyy' },
+    { format: FORMAT_YEAR_MONTH_DATE, btnText: 'yyyy-MM-dd' }
   ];
 </script>
 

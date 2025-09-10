@@ -14,6 +14,12 @@ export const FORMAT_EMPTY = ' ';
 export const FORMAT_DAY = 'eee';
 export const FORMAT_DATE_DAY = 'd eee';
 export const FORMAT_DAY_DATE = 'eee d';
+export const FORMAT_DAY_OF_MONTH = 'd';
+export const FORMAT_DAY_OF_YEAR = 'D';
+export const FORMAT_WEEK_OF_YEAR = 'w';
+export const FORMAT_MONTH = 'MMM';
+export const FORMAT_DAY_MONTH_YEAR = 'dd-MM-yyyy';
+export const FORMAT_YEAR_MONTH_DATE = 'yyyy-MM-dd';
 
 export enum Day {
   SUNDAY = 'SUNDAY',
@@ -64,5 +70,5 @@ export function getElapsedPercentageOfYear(date: Date, weekStartsOn: Day) {
 }
 
 export function format(date: Date, format: string): string {
-  return dateFnFormat(date, format);
+  return dateFnFormat(date, format, { useAdditionalDayOfYearTokens: true });
 }
