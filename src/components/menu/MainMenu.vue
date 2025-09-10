@@ -14,6 +14,7 @@
     showWeekdaySetting: boolean
   }>();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const emit = defineEmits<{
     (e: 'onFontColourUpdate', newFontColour: string): void
     (e: 'onBackgroundColourUpdate', newBackgroundColour: string): void
@@ -25,11 +26,6 @@
 
   const BLACK = 'black';
   const WHITE = 'white';
-
-  function setClockTypeDay() {
-    emit('onPercentElapsedFnUpdate', getElapsedPercentageOfDay);
-    emit('onFormatBottomTextFnUpdate', emptyStr);
-  }
 </script>
 
 <template>
@@ -47,7 +43,7 @@
     </button>
     <div>Clock progress bar</div>
     <button
-      @click="setClockTypeDay"
+      @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfDay)"
     >
       Day
     </button>
@@ -66,18 +62,18 @@
     >
       Year
     </button>
+    <div>Weekdays</div>
+    <button
+      @click="$emit('onFormatBottomTextFnUpdate', emptyStr)"
+    >
+      Hide
+    </button>
+    <button
+      @click="$emit('onFormatBottomTextFnUpdate', formatWeekDays)"
+    >
+      Show
+    </button>
     <template v-if="props.showWeekdaySetting">
-      <div>Weekdays</div>
-      <button
-        @click="$emit('onFormatBottomTextFnUpdate', emptyStr)"
-      >
-        Hide
-      </button>
-      <button
-        @click="$emit('onFormatBottomTextFnUpdate', formatWeekDays)"
-      >
-        Show
-      </button>
       <div>Week start day</div>
       <template v-for="day in Weekday" :key="day">
         <button
