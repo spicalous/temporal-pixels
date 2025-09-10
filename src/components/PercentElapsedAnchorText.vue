@@ -16,7 +16,7 @@
 </script>
 
 <template>
-  <div class="weekday-container" :style="dynamicTextStyles">
+  <div class="container" :style="dynamicTextStyles">
     <div class="text">
       {{ props.text }}
     </div>
@@ -24,7 +24,7 @@
 </template>
 
 <style scoped>
-  .weekday-container {
+  .container {
     display: flex;
     align-items: end;
     justify-content: end;

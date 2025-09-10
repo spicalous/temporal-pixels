@@ -4,7 +4,7 @@
   import MainMenu from '@/components/menu/MainMenu.vue';
   import ClockSvg from '@/components/ClockSvg.vue';
   import TimeText from '@/components/TimeText.vue';
-  import WeekDayText from '@/components/WeekDayText.vue';
+  import PercentElapsedAnchorText from '@/components/PercentElapsedAnchorText.vue';
   import {
     FORMAT_TIME_24,
     FORMAT_EMPTY,
@@ -57,12 +57,12 @@
       :text="text"
       :textColour="fontColour"
     ></TimeText>
-    <WeekDayText
-      class="weekday-text"
+    <PercentElapsedAnchorText
+      class="bottom-text"
       :text="bottomText"
       :textColour="fontColour"
       :percentElapsed="percentElapsed"
-    ></WeekDayText>
+    ></PercentElapsedAnchorText>
   </div>
   <MainMenu
     id="menu"
@@ -93,7 +93,7 @@
     left: 0;
   }
 
-  .weekday-text {
+  .bottom-text {
     height: 100vh;
     position: fixed;
     bottom: 0;
