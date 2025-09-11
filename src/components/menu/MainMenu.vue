@@ -55,11 +55,13 @@
       <fieldset class="button-list">
         <legend>Background colour</legend>
         <button
+          class="btn"
           @click="$emit('onFontColourUpdate', BLACK); $emit('onBackgroundColourUpdate', WHITE);"
         >
           White
         </button>
         <button
+          class="btn"
           @click="$emit('onFontColourUpdate', WHITE); $emit('onBackgroundColourUpdate', BLACK);"
         >
           Black
@@ -70,21 +72,25 @@
       <fieldset class="button-list">
         <legend>Clock progress bar</legend>
         <button
+          class="btn"
           @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfDay)"
         >
           Day
         </button>
         <button
+          class="btn"
           @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfWeek)"
         >
           Week
         </button>
         <button
+          class="btn"
           @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfMonth)"
         >
           Month
         </button>
         <button
+          class="btn"
           @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfYear)"
         >
           Year
@@ -96,6 +102,7 @@
         <legend>Bottom text</legend>
         <template v-for="formatItem in formatList" :key="formatItem.format">
           <button
+            class="btn"
             @click="$emit('onBottomTextFormatUpdate', formatItem.format)"
           >
             {{ formatItem.btnText }}
@@ -108,6 +115,7 @@
         <legend>Week start day</legend>
         <template v-for="day in Day" :key="day">
           <button
+            class="btn"
             @click="$emit('onWeekStartUpdate', day)"
           >
             {{ day }}
@@ -117,6 +125,7 @@
     </div>
     <br/>
     <button
+      class="btn"
       @click="$emit('onClose')"
     >
       Close

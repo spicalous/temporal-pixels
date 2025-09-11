@@ -11,3 +11,12 @@ svg,
 canvas {
   display: block;
 }
+
+.btn {
+  font-family: null;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  padding: .375rem .75rem;
+}
