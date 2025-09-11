@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, onBeforeUnmount } from 'vue';
 
   const props = defineProps<{
     text: string,
@@ -12,6 +12,23 @@
       color: props.textColour,
       width: `${props.percentElapsed * 100}%`
     };
+  });
+
+  function checkTextVisibility() {
+    console.log('resized');
+  }
+
+  let timeout: number | undefined;
+  const debouncedCheckTextVisibility = function() {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      checkTextVisibility();
+    }, 200);
+  }
+
+  window.addEventListener('resize', debouncedCheckTextVisibility);
+  onBeforeUnmount(() => {
+    window.removeEventListener('resize', debouncedCheckTextVisibility);
   });
 </script>
 

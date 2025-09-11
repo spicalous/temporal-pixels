@@ -50,7 +50,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="main-menu-container">
     <div>
       <fieldset class="button-list">
         <legend>Background colour</legend>
@@ -134,6 +134,10 @@
 </template>
 
 <style scoped>
+
+  .main-menu-container {
+    padding: 8px 12px;
+  }
 
   fieldset {
     display: inline-flex;
