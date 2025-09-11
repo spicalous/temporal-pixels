@@ -51,57 +51,70 @@
 
 <template>
   <div>
-    <div>Background colour</div>
-    <button
-      @click="$emit('onFontColourUpdate', BLACK); $emit('onBackgroundColourUpdate', WHITE);"
-    >
-      White
-    </button>
-    <button
-      @click="$emit('onFontColourUpdate', WHITE); $emit('onBackgroundColourUpdate', BLACK);"
-    >
-      Black
-    </button>
-    <div>Clock progress bar</div>
-    <button
-      @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfDay)"
-    >
-      Day
-    </button>
-    <button
-      @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfWeek)"
-    >
-      Week
-    </button>
-    <button
-      @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfMonth)"
-    >
-      Month
-    </button>
-    <button
-      @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfYear)"
-    >
-      Year
-    </button>
-    <div>Bottom text</div>
-    <template v-for="formatItem in formatList" :key="formatItem.format">
-      <button
-        @click="$emit('onBottomTextFormatUpdate', formatItem.format)"
-      >
-        {{ formatItem.btnText }}
-      </button>
-    </template>
-    <template v-if="props.showWeekSetting">
-      <div>Week start day</div>
-      <template v-for="day in Day" :key="day">
+    <div>
+      <fieldset class="button-list">
+        <legend>Background colour</legend>
         <button
-          @click="$emit('onWeekStartUpdate', day)"
+          @click="$emit('onFontColourUpdate', BLACK); $emit('onBackgroundColourUpdate', WHITE);"
         >
-          {{ day }}
+          White
         </button>
-      </template>
-    </template>
-    <br/>
+        <button
+          @click="$emit('onFontColourUpdate', WHITE); $emit('onBackgroundColourUpdate', BLACK);"
+        >
+          Black
+        </button>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset class="button-list">
+        <legend>Clock progress bar</legend>
+        <button
+          @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfDay)"
+        >
+          Day
+        </button>
+        <button
+          @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfWeek)"
+        >
+          Week
+        </button>
+        <button
+          @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfMonth)"
+        >
+          Month
+        </button>
+        <button
+          @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfYear)"
+        >
+          Year
+        </button>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset class="button-list">
+        <legend>Bottom text</legend>
+        <template v-for="formatItem in formatList" :key="formatItem.format">
+          <button
+            @click="$emit('onBottomTextFormatUpdate', formatItem.format)"
+          >
+            {{ formatItem.btnText }}
+          </button>
+        </template>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset v-if="props.showWeekSetting" class="button-list">
+        <legend>Week start day</legend>
+        <template v-for="day in Day" :key="day">
+          <button
+            @click="$emit('onWeekStartUpdate', day)"
+          >
+            {{ day }}
+          </button>
+        </template>
+      </fieldset>
+    </div>
     <br/>
     <button
       @click="$emit('onClose')"
@@ -110,3 +123,15 @@
     </button>
   </div>
 </template>
+
+<style scoped>
+
+  fieldset {
+    display: inline-flex;
+  }
+
+  .button-list {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+</style>
