@@ -52,25 +52,12 @@
 <template>
   <div class="main-menu-container">
     <div>
-      <fieldset class="button-list">
-        <legend>Background colour</legend>
-        <button
-          class="btn"
-          @click="$emit('onFontColourUpdate', BLACK); $emit('onBackgroundColourUpdate', WHITE);"
-        >
-          White
-        </button>
-        <button
-          class="btn"
-          @click="$emit('onFontColourUpdate', WHITE); $emit('onBackgroundColourUpdate', BLACK);"
-        >
-          Black
-        </button>
-      </fieldset>
+      <h2>What if time was a progress bar?</h2>
+      <p>Display a progress bar across the screen based on how much time has elapsed.</p>
     </div>
     <div>
       <fieldset class="button-list">
-        <legend>Clock progress bar</legend>
+        <legend>Progress bar duration</legend>
         <button
           class="btn"
           @click="$emit('onPercentElapsedFnUpdate', getElapsedPercentageOfDay)"
@@ -99,7 +86,7 @@
     </div>
     <div>
       <fieldset class="button-list">
-        <legend>Bottom text</legend>
+        <legend>Informational text</legend>
         <template v-for="formatItem in formatList" :key="formatItem.format">
           <button
             class="btn"
@@ -121,6 +108,23 @@
             {{ day }}
           </button>
         </template>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset class="button-list">
+        <legend>Background colour</legend>
+        <button
+          class="btn"
+          @click="$emit('onFontColourUpdate', BLACK); $emit('onBackgroundColourUpdate', WHITE);"
+        >
+          White
+        </button>
+        <button
+          class="btn"
+          @click="$emit('onFontColourUpdate', WHITE); $emit('onBackgroundColourUpdate', BLACK);"
+        >
+          Black
+        </button>
       </fieldset>
     </div>
     <br/>
